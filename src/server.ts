@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express';
-const app = express()
+import cors from 'cors';
+import routes from './router/index'
 const port = 3000
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!')
-})
+const app = express();
+app.use(express.json());
+app.use(cors());
+app.use("/", routes);
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
