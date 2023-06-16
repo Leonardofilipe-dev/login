@@ -3,6 +3,7 @@ import cors from 'cors';
 import routes from './router/index'
 import db from './dataBase/db';
 import dotenv from 'dotenv'
+import handleError from './middlewares/handleError';
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/", routes);
+app.use(handleError)
 
 
 app.listen(port, () => {
