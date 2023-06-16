@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
 import User from '../model/userModels';
+import bcrypt from 'bcrypt'
 
 class userController{
     async create(req: Request, res: Response){
         try {
             const {name, email, password} = req.body;
+            const saltRounds = 10;
+            let passwordHash = bcrypt.hashSync(password, saltRounds)
             const user = new User({
                 name,
                 email,
-                password
+                password:passwordHash
             })
 
             await user.save()

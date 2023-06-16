@@ -13,15 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userModels_1 = __importDefault(require("../model/userModels"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class userController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, email, password } = req.body;
+                const saltRounds = 10;
+                let passwordHash = bcrypt_1.default.hashSync(password, saltRounds);
                 const user = new userModels_1.default({
                     name,
                     email,
-                    password
+                    password: passwordHash
                 });
                 yield user.save();
                 res.status(201).json(user);
